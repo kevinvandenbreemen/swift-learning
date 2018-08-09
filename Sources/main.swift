@@ -21,12 +21,14 @@ var yVals = [String]()
 for argument in CommandLine.arguments{
     print("arg=\(argument)")
     if argument.hasPrefix("x="){
-        for item in (argument.split{$0 == ","}){
+        let arg = String(argument.dropFirst(2)) //  Cheesy - get rid of x/y = bit
+        for item in (arg.split{$0 == ","}){
             xVals.append(String(item))
         }
     }
     else if argument.hasPrefix("y="){
-        for item in (argument.split{$0 == ","}){
+        let arg = String(argument.dropFirst(2))
+        for item in (arg.split{$0 == ","}){
             yVals.append(String(item))
         }
     }
