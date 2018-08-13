@@ -35,6 +35,25 @@ class LinearRegressionExperiment{
         return sum/(2.0*Double((yVals.count)))
     }
 
+    func calculateErrorGradient(hVector:[Double]) -> [Double]{
+        var delJDelTheta0:Double = 0.0
+        var delJDelTheta1:Double = 0.0
+
+        for i in stride(from:0, to:yVals.count, by:1){
+            delJDelTheta0 += (evaluate(hVector:hVector, xVal:xVals[i]) - yVals[i])
+            delJDelTheta1 += (evaluate(hVector:hVector, xVal:xVals[i]) - yVals[i])
+            delJDelTheta1 *= xVals[i]
+        }
+
+        delJDelTheta0 *= (1.0/Double(yVals.count))
+        delJDelTheta1 *= (1.0/Double(yVals.count))
+
+        return [
+            delJDelTheta0, 
+            delJDelTheta1
+        ]
+    }
+
 }
 
 let experiment = LinearRegressionExperiment(
@@ -49,3 +68,4 @@ print(
 )
 
 print("Errors:  \(experiment.calculateError(hVector:[0.0, 1.0]))")
+print("Error Grad:  \(experiment.calculateErrorGradient(hVector:[0.0, 1.0]))")
